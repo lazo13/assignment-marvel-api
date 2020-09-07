@@ -1,12 +1,25 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Heroes</router-link> |
+      <router-link to="/comics">Comics</router-link>
+      <search-character-form></search-character-form>
     </div>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
+
+<script lang="ts">
+import {Vue, Component } from 'vue-property-decorator'
+import SearchForm from '@/components/SearchForm.vue'
+
+@Component({
+  components: {
+    SearchForm
+  }
+})
+export default class App extends Vue{}
+</script>
 
 <style>
 #app {
