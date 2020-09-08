@@ -18,15 +18,23 @@
 </template>
 
 <script lang="ts">
+import comics from '@/store/module/comics'
 import heroes from '@/store/module/heroes'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+type rootView = 'characters' | 'comics'
 
 @Component
 export default class SearchForm extends Vue {
+  @Prop() readonly rootView!: rootView
   name: string = ''
 
   handleSearch() {
-    heroes.searchCharacter(this.name)
+    if (this.rootView === 'characters') {
+      heroes.searchCharacters(this.name)
+    }
+    else {
+      comics.searchComics(this.name)
+    }
     this.name = ''
   }
 }

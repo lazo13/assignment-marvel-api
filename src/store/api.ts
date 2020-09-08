@@ -89,6 +89,19 @@ export async function fetchComic(comicId: number): Promise<Comic | undefined> {
    }
 }
 
+export async function getSearchComics(title: string): Promise<Comic[] | undefined> {
+   const baseUrl = `https://gateway.marvel.com/v1/public/comics?limit=100&titleStartsWith=${title}&`
+   try {
+      const response = await axios.get(`${baseUrl}${auth}`)
+      const results = filteredData(response.data)
+
+      return results
+   }
+   catch (error) {
+      console.log(error)
+   }
+}
+
 // ===================================================================================================
 
 export const filteredData = (response: any) => {

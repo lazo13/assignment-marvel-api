@@ -7,11 +7,7 @@
       @click="goToDetails(comic.id)"
     >
       <h3>{{ comic.title }}</h3>
-      <img
-        :src="
-          `${comic.thumbnail.path}/standard_xlarge.${comic.thumbnail.extension}`
-        "
-      />
+      <img :src="`${comic.thumbnail.path}/standard_xlarge.${comic.thumbnail.extension}`" />
     </div>
   </div>
 </template>
@@ -23,7 +19,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class Comics extends Vue {
   created() {
-    comics.getComics()
+    // comics.getComics()
   }
 
   get comics() {

@@ -37,6 +37,13 @@ class ComicsModule extends VuexModule {
     return result
   }
 
+  @Action({commit: 'setComics', rawError: true})
+  async searchComics(title: string) {
+    const result: Comic[] | undefined = await api.getSearchComics(title)
+
+    return result
+  }
+
 }
 
 export default getModule(ComicsModule)

@@ -32,12 +32,11 @@ class HeroesModule extends VuexModule {
   @Action({commit: 'setCharacter', rawError: true})
   async loadCharacter(characterId: number) {
     const result: Character | undefined = await api.fetchCharacter(characterId)
-
     return result
   }
 
   @Action({commit: 'setCharacters', rawError: true})
-  async searchCharacter(name: string) {
+  async searchCharacters(name: string) {
     const result: Character[] | undefined = await api.getSearchCharacters(name)
 
     return result

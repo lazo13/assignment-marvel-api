@@ -1,17 +1,13 @@
 <template>
-  <div class="cards">
-    <div
-      class="card"
-      v-for="character in characters"
-      :key="character.id"
-      @click="goToDetails(character.id)"
-    >
-      <h3>{{ character.name }}</h3>
-      <img
-        :src="
-          `${character.thumbnail.path}/standard_xlarge.${character.thumbnail.extension}`
-        "
-      />
+    <div class="cards">
+      <div
+        class="card"
+        v-for="character in characters"
+        :key="character.id"
+        @click="goToDetails(character.id)"
+      >
+        <h3>{{ character.name }}</h3>
+        <img :src="`${character.thumbnail.path}/standard_xlarge.${character.thumbnail.extension}`"/>
     </div>
   </div>
 </template>
@@ -22,7 +18,6 @@ import heroes from '@/store/module/heroes'
 
 @Component
 export default class Characters extends Vue {
-
   created() {
     // heroes.getCharacters()
   }

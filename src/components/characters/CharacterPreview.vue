@@ -36,12 +36,10 @@ export default class CharacterPreview extends Vue {
 	mounted() {
 		heroes.loadCharacter(+this.$route.params.id).then((loadedCharacter) => {
 			if (!loadedCharacter) return
-			console.log("CharacterPreview -> mounted -> loadedCharacter", loadedCharacter)
 
 			const thumbnail = loadedCharacter.thumbnail
 			if (!thumbnail) return
 			const { path, extension } = thumbnail
-      console.log({path, extension})
 
 			this.url = this.createImageUrl(path, extension)
 			this.getComicsWhereCharacterAppears(loadedCharacter.comics)
