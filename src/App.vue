@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Heroes</router-link> |
       <router-link to="/comics">Comics</router-link>
-      <search-character-form></search-character-form>
+      <search-form></search-form>
     </div>
     <router-view></router-view>
   </div>

@@ -12,12 +12,12 @@ Vue.use(VueRouter)
   },
   {
     path: '/character/:id',
-    name: 'character-preview',
+    name: 'character',
     component: () => import('@/components/characters/CharacterPreview.vue')
   },
   {
     path: '/comics',
-    name: 'ComicsView',
+    name: 'Comics',
     component: () => import('@/views/ComicsView.vue')
   },
   {

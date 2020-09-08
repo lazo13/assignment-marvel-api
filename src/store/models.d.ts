@@ -1,9 +1,9 @@
-export interface CharactersResponse {
+export interface Response {
   offset: number;
   limit: number;
   total: number;
   count: number;
-  results?: Array<Character> | null;
+  results?: Array<Character | Comic> | null;
 }
 
 export interface Character {
@@ -40,13 +40,13 @@ export interface ComicSummary {
 
 // =====================================================================================================
 
-export interface ComicsResponse {
+/* export interface Response {
   offset: number;
   limit: number;
   total: number;
   count: number;
   results?: Array<Comic> | null;
-}
+} */
 export interface Comic {
   id?: number;
   digitalId?: number;
