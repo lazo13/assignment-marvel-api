@@ -45,6 +45,19 @@ export async function fetchCharacter(characterId: number): Promise<Character | u
    }
 }
 
+export async function getSearchCharacters(name: string): Promise<Character[] | undefined> {
+   const baseUrl = `https://gateway.marvel.com/v1/public/characters?limit=100&nameStartsWith=${name}&`
+   try {
+      const response = await axios.get(`${baseUrl}${auth}`)
+      const results = filteredData(response.data)
+
+      return results
+   }
+   catch (error) {
+      console.log(error)
+   }
+}
+
 
 // COMICS RELATED CALLS
 
@@ -77,6 +90,7 @@ export async function fetchComic(comicId: number): Promise<Comic | undefined> {
 }
 
 // ===================================================================================================
+
 export const filteredData = (response: any) => {
    if (!response || !response.data) return
 

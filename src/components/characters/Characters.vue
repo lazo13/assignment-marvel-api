@@ -22,8 +22,9 @@ import heroes from '@/store/module/heroes'
 
 @Component
 export default class Characters extends Vue {
+
   created() {
-    heroes.getCharacters()
+    // heroes.getCharacters()
   }
 
   get characters() {

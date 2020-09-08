@@ -35,6 +35,13 @@ class HeroesModule extends VuexModule {
 
     return result
   }
+
+  @Action({commit: 'setCharacters', rawError: true})
+  async searchCharacter(name: string) {
+    const result: Character[] | undefined = await api.getSearchCharacters(name)
+
+    return result
+  }
 }
 
 export default getModule(HeroesModule)

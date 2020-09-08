@@ -45,7 +45,7 @@ export default class ComicPreview extends Vue {
       this.getCharactersAppearingInComic(loadedComic.characters)
     })
 	}
-	
+
 	get comic() {
 		return comics.comic
 	}
