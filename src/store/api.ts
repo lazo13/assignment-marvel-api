@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { public_key, private_key } from '@/marvel-api';
 import CryptoJS from 'crypto-js';
-import { Character } from './models.d';
+import { Character, Comic } from './models.d';
 
 const timestamp = new Date().getTime()
 const stringToHash = (timestamp + private_key + public_key).toString()
@@ -45,8 +45,38 @@ export async function fetchCharacter(characterId: number): Promise<Character | u
    }
 }
 
+
 // COMICS RELATED CALLS
 
+export async function fetchComics(): Promise<Comic[] | undefined> {
+   const baseUrl = `https://gateway.marvel.com/v1/public/comics?`
+
+   try {
+      const response = await axios.get(`${baseUrl}${auth}`)
+      const result: Comic[] = filteredData(response.data)
+
+      return result
+   }
+   catch (error) {
+      console.log("Error when fetching comics" + error)
+   }
+}
+
+export async function fetchComic(comicId: number): Promise<Comic | undefined> {
+   const baseUrl = `https://gateway.marvel.com/v1/public/comics/${comicId}?`
+
+   try {
+      const response = await axios.get(`${baseUrl}${auth}`)
+      const result = filteredData(response.data)
+
+      return result[0]
+   }
+   catch (error) {
+      console.log("Error when fetching character" + error)
+   }
+}
+
+// ===================================================================================================
 export const filteredData = (response: any) => {
    if (!response || !response.data) return
 
