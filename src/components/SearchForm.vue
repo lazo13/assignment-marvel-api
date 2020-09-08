@@ -4,7 +4,7 @@
       <div class="ui action input">
         <input
           v-model="name"
-          placeholder="Character Name"
+          :placeholder="rootView === 'characters' ? 'Character Name' : 'Comic Name'"
           type="text"
           required
         />
@@ -28,12 +28,12 @@ export default class SearchForm extends Vue {
   @Prop() readonly rootView!: rootView
   name: string = ''
 
-  handleSearch() {
+  async handleSearch() {
     if (this.rootView === 'characters') {
-      heroes.searchCharacters(this.name)
+      await heroes.searchCharacters(this.name)
     }
     else {
-      comics.searchComics(this.name)
+      await comics.searchComics(this.name)
     }
     this.name = ''
   }

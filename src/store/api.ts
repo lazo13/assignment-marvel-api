@@ -15,6 +15,9 @@ const auth = [
    `${md5Hash}`
 ].join('')
 
+export const charactersApi = axios.create({ baseURL: `https://gateway.marvel.com/v1/public/characters?` })
+export const comicsApi = axios.create({ baseURL: `https://gateway.marvel.com/v1/public/comics?` })
+
 // CHARACTERS RELATED CALLS
 
 export async function fetchCharacters(): Promise<Character[] | undefined> {
@@ -22,9 +25,7 @@ export async function fetchCharacters(): Promise<Character[] | undefined> {
 
    try {
       const response = await axios.get(`${baseUrl}${auth}`)
-      const result: Character[] = filteredData(response.data)
-
-      return result
+      return response.data?.data?.results
    }
    catch (error) {
       console.log("Error when fetching characters" + error)
@@ -36,9 +37,7 @@ export async function fetchCharacter(characterId: number): Promise<Character | u
 
    try {
       const response = await axios.get(`${baseUrl}${auth}`)
-      const result = filteredData(response.data)
-
-      return result[0]
+      return response.data?.data?.results?.[0]
    }
    catch (error) {
       console.log("Error when fetching character" + error)
@@ -49,9 +48,7 @@ export async function getSearchCharacters(name: string): Promise<Character[] | u
    const baseUrl = `https://gateway.marvel.com/v1/public/characters?limit=100&nameStartsWith=${name}&`
    try {
       const response = await axios.get(`${baseUrl}${auth}`)
-      const results = filteredData(response.data)
-
-      return results
+      return response.data?.data?.results
    }
    catch (error) {
       console.log(error)
@@ -66,9 +63,7 @@ export async function fetchComics(): Promise<Comic[] | undefined> {
 
    try {
       const response = await axios.get(`${baseUrl}${auth}`)
-      const result: Comic[] = filteredData(response.data)
-
-      return result
+      return response.data?.data?.results
    }
    catch (error) {
       console.log("Error when fetching comics" + error)
@@ -80,9 +75,7 @@ export async function fetchComic(comicId: number): Promise<Comic | undefined> {
 
    try {
       const response = await axios.get(`${baseUrl}${auth}`)
-      const result = filteredData(response.data)
-
-      return result[0]
+      return response.data?.data?.results?.[0]
    }
    catch (error) {
       console.log("Error when fetching character" + error)
@@ -93,19 +86,9 @@ export async function getSearchComics(title: string): Promise<Comic[] | undefine
    const baseUrl = `https://gateway.marvel.com/v1/public/comics?limit=100&titleStartsWith=${title}&`
    try {
       const response = await axios.get(`${baseUrl}${auth}`)
-      const results = filteredData(response.data)
-
-      return results
+      return response.data?.data?.results
    }
    catch (error) {
       console.log(error)
    }
-}
-
-// ===================================================================================================
-
-export const filteredData = (response: any) => {
-   if (!response || !response.data) return
-
-   return response.data.results || []
 }

@@ -11,6 +11,12 @@ import * as api from '@/store/api'
 class HeroesModule extends VuexModule {
   characters: Character[] = []
   character: Character = {}
+  loading: boolean = false
+
+  @Mutation
+  setLoading(loading: boolean) {
+    this.loading = loading;
+  }
 
   @Mutation
   setCharacters(characters: Character[]) {
@@ -37,7 +43,9 @@ class HeroesModule extends VuexModule {
 
   @Action({commit: 'setCharacters', rawError: true})
   async searchCharacters(name: string) {
+    this.context.commit('setLoading', true)
     const result: Character[] | undefined = await api.getSearchCharacters(name)
+    this.context.commit('setLoading', false)
 
     return result
   }

@@ -1,6 +1,32 @@
 .card {
   padding: 1rem;
   min-height: 6rem;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+  border-radius: 5px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.card h3 {
+  color: white;
+  position: absolute;
+  bottom: 12px;
+  margin: 0;
+  width: 100%;
+  padding: 8px 16px;
+}
+
+.card img {
+  object-fit: cover;
+  width: 100%;
+}
+
+/* .card {
+  padding: 1rem;
+  min-height: 6rem;
 	text-align: center;
   background-color: #333;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -15,7 +41,7 @@
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-
+*/
 img {
   border-radius: 5px 5px 0 0;
 }

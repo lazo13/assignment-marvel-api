@@ -12,16 +12,21 @@ import { Comic } from '@/store/models'
 class ComicsModule extends VuexModule {
   comics: Comic[] = []
   comic: Comic = {}
+  loading: boolean = false
 
   @Mutation
   setComics(comics: Comic[]) {
     this.comics = comics
   }
 
+  @Mutation
+  setLoading(loading: boolean) {
+    this.loading = loading;
+  }
+
   @Action({commit: 'setComics', rawError: true})
   async getComics() {
     const result: Comic[] | undefined = await api.fetchComics()
-
     return result
   }
 
@@ -39,7 +44,9 @@ class ComicsModule extends VuexModule {
 
   @Action({commit: 'setComics', rawError: true})
   async searchComics(title: string) {
+    this.context.commit('setLoading', true)
     const result: Comic[] | undefined = await api.getSearchComics(title)
+    this.context.commit('setLoading', false)
 
     return result
   }
