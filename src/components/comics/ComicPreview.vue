@@ -1,20 +1,22 @@
 <template>
   <div>
     <div class="flex-container">
-      <div class="flex">
-        <h3>{{ comic.title }}</h3>
-
-        <h5>Description:</h5>
-        <p>{{ comic.description }}</p>
-
-        <h5>Characters appearing:</h5>
-        <ul v-for="characterName in charactersAppearingInComic">
-          <li>{{ characterName }}</li>
-        </ul>
-      </div>
-
       <div class="flex2">
         <img :src="url" class="char-img" />
+      </div>
+
+      <div class="flex">
+        <h1>{{ comic.title }}</h1>
+
+        <h3>Description:</h3>
+        <p>
+          {{ comic.description ? comic.description : 'No description added.' }}
+        </p>
+
+        <h3>Characters appearing:</h3>
+        <ul class="no-bullets"v-for="characterName in charactersAppearingInComic">
+          <li>{{ characterName }}</li>
+        </ul>
       </div>
     </div>
     <router-link to="/comics">
@@ -38,23 +40,23 @@ export default class ComicPreview extends Vue {
       if (!loadedComic) return
 
       const thumbnail = loadedComic.thumbnail
-			if (!thumbnail) return
-			const { path, extension } = thumbnail
+      if (!thumbnail) return
+      const { path, extension } = thumbnail
 
-			this.url = this.createImageUrl(path, extension)
+      this.url = this.createImageUrl(path, extension)
       this.getCharactersAppearingInComic(loadedComic.characters)
     })
-	}
+  }
 
-	get comic() {
-		return comics.comic
-	}
+  get comic() {
+    return comics.comic
+  }
 
-  createImageUrl(path: string | undefined, extension: string | undefined): string {
-		if (!path) return ''
+  createImageUrl(path: string | undefined,extension: string | undefined): string {
+    if (!path) return ''
 
-		return `${path}/standard_xlarge.${extension}`
-	}
+    return `${path}/standard_xlarge.${extension}`
+  }
 
   getCharactersAppearingInComic(characters: CharacterList | undefined) {
     if (!characters || !characters.items) return
@@ -69,35 +71,8 @@ export default class ComicPreview extends Vue {
   }
 }
 </script>
-<style>
-.flex-container {
-  margin: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.flex {
-  flex: 50%;
-  text-align: right;
-}
-
-.flex2 {
-  flex: 50%;
-}
-
-.char-img {
-  width: 50%;
-  border-radius: 10px;
-}
-
-.btn-back {
-  width: 200px;
-  padding: 15px;
-  border-radius: 25px;
-  background-color: transparent;
-  font-size: 20px;
-  margin-bottom: 100px;
-  cursor: pointer;
+<style scoped src="@/assets/main.css">
+h1 {
+  font-size: 2.3rem
 }
 </style>

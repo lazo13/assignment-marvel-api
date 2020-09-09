@@ -37,7 +37,8 @@ export default class SearchForm extends Vue {
     this.searched(true)
 
     if (this.rootView === 'characters') {
-      heroes.searchCharacters(this.name)
+      heroes.clearCharacters()
+      heroes.searchCharacters({ name: this.name, page: this.page })
     } else {
       comics.clearComics()
       comics.searchComics({ title: this.name, page: this.page })

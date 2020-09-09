@@ -10,12 +10,12 @@ import { Comic } from '@/store/models'
   store
 })
 class ComicsModule extends VuexModule {
-  comics: Comic[] = []
-  comic: Comic = {}
-  loading: boolean = false
-  searchTerm: string = ''
-  pageNumber: number = 0
-  hasMore: boolean = false
+  comics: Comic[] = [];
+  comic: Comic = {};
+  loading: boolean = false;
+  searchTerm: string = '';
+  pageNumber: number = 0;
+  hasMore: boolean = false;
 
 
   @Mutation
@@ -66,7 +66,7 @@ class ComicsModule extends VuexModule {
     return result
   }
 
-  @Action({commit: 'setComicsClear', rawError: true})
+  @Action({ commit: 'setComicsClear', rawError: true })
   clearComics() {
     const newComics: Comic[] = []
     return newComics
@@ -78,10 +78,9 @@ class ComicsModule extends VuexModule {
     this.context.commit('setSearchTerm', title)
     this.context.commit('setPageNumber', page)
 
-    // const result: Comic[] | undefined = await api.getSearchComics(title)
     const result = await api.getSearchComics(title, page)
 
-    this.context.commit('setHasMore', result.total - (result.offset >=20 ? result.offset : result.count) > 0 ? true : false)
+    this.context.commit('setHasMore', (result.offset + result.count) !== result.total ? true : false)
     this.context.commit('setLoading', false)
 
     const { results } = result

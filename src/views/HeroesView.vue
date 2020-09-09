@@ -24,7 +24,6 @@ export default class HeroesView extends Vue {
 
   // initially don't show 'No data found.'
   handleSearch(value:boolean) {
-    console.log("HeroesView -> handleSearch -> value", value)
     this.isSearchFormTriggered = value
   }
 

@@ -9,9 +9,13 @@ import * as api from '@/store/api'
   store
 })
 class HeroesModule extends VuexModule {
-  characters: Character[] = []
-  character: Character = {}
-  loading: boolean = false
+  characters: Character[] = [];
+  character: Character = {};
+  loading: boolean = false;
+  searchTerm: string = '';
+  pageNumber: number = 0;
+  hasMore: boolean = false;
+
 
   @Mutation
   setLoading(loading: boolean) {
@@ -19,15 +23,24 @@ class HeroesModule extends VuexModule {
   }
 
   @Mutation
-  setCharacters(characters: Character[]) {
-    this.characters = characters
+  setHasMore(hasMore: boolean) {
+    this.hasMore = hasMore;
   }
 
-  @Action({commit: 'setCharacters', rawError: true})
-  async getCharacters() {
-    const result: Character[] | undefined = await api.fetchCharacters()
+  @Mutation
+  setPageNumber(page: number) {
+    this.pageNumber = page
+  }
 
-    return result
+  @Mutation
+  setSearchTerm(searchTerm: string) {
+    this.searchTerm = searchTerm
+  }
+
+
+  @Mutation
+  setCharacters(characters: Character[]) {
+    this.characters = this.characters.concat(characters)
   }
 
   @Mutation
@@ -35,19 +48,44 @@ class HeroesModule extends VuexModule {
     this.character = character
   }
 
-  @Action({commit: 'setCharacter', rawError: true})
+  @Mutation
+  setCharactersClear(characters: Character[]) {
+    this.characters = characters;
+  }
+
+  @Action({ commit: 'setCharacters', rawError: true })
+  async getCharacters() {
+    const result: Character[] | undefined = await api.fetchCharacters()
+
+    return result
+  }
+
+  @Action({ commit: 'setCharacter', rawError: true })
   async loadCharacter(characterId: number) {
     const result: Character | undefined = await api.fetchCharacter(characterId)
     return result
   }
 
-  @Action({commit: 'setCharacters', rawError: true})
-  async searchCharacters(name: string) {
+  @Action({ commit: 'setCharactersClear', rawError: true })
+  clearCharacters() {
+    const newCharacters: Character[] = []
+    return newCharacters
+  }
+
+  @Action({ commit: 'setCharacters', rawError: true })
+  async searchCharacters({ name, page }: { name: string, page: number }) {
     this.context.commit('setLoading', true)
-    const result: Character[] | undefined = await api.getSearchCharacters(name)
+    this.context.commit('setSearchTerm', name)
+    this.context.commit('setPageNumber', page)
+
+    const result = await api.getSearchCharacters(name, page)
+
+    this.context.commit('setHasMore', (result.offset + result.count) !== result.total ? true : false)
     this.context.commit('setLoading', false)
 
-    return result
+    const { results } = result
+
+    return results as Character[]
   }
 }
 

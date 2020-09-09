@@ -18,12 +18,11 @@
 </template>
 
 <script lang="ts">
-import comics from '@/store/module/comics'
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import comics from '@/store/module/comics'
 
 @Component
 export default class Comics extends Vue {
-  // pageNumber: number = 1
 
   get searchTerm() {
     return comics.searchTerm
@@ -46,7 +45,7 @@ export default class Comics extends Vue {
   }
 
   onLoadMore() {
-    comics.searchComics({ title: this.searchTerm, page: this.pageNumber+1 })
+    comics.searchComics({ title: this.searchTerm, page: this.pageNumber + 1 })
   }
 }
 </script>

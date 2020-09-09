@@ -10,7 +10,7 @@
 
         <h3>Description:</h3>
         <p>
-          {{ character.description ? character.description : 'No description added' }}
+          {{ character.description ? character.description : 'No description added.' }}
         </p>
 
         <h3>Appearing in comics:</h3>
@@ -71,41 +71,8 @@ export default class CharacterPreview extends Vue {
   }
 }
 </script>
-<style>
-.flex-container {
-  margin: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.flex {
-  flex: 50%;
-  text-align: left;
-}
-
-.flex2 {
-  flex: 50%;
-}
-
-.char-img {
-  width: 50%;
-  border-radius: 10px;
-}
-
-ul.no-bullets {
-  list-style-type: none;
-  /* padding-left: 16px; */
-	margin: 5px 0;
-}
-
-.btn-back {
-  width: 200px;
-  padding: 15px;
-  border-radius: 25px;
-  background-color: transparent;
-  font-size: 20px;
-  margin-bottom: 100px;
-  cursor: pointer;
+<style scoped src="@/assets/main.css">
+h1 {
+  font-size: 2.3rem
 }
 </style>
