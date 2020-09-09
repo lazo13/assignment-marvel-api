@@ -26,12 +26,13 @@ type rootView = 'characters' | 'comics'
 @Component
 export default class SearchForm extends Vue {
   @Prop() readonly rootView!: rootView
-  name: string = ''
 
   @Emit('searched')
   searched(value: boolean) {}
 
-  handleSearch() {
+  name: string = ''
+
+  public handleSearch() {
     this.searched(true)
     if (this.rootView === 'characters') {
       heroes.searchCharacters(this.name)

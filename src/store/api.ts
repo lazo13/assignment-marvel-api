@@ -82,11 +82,28 @@ export async function fetchComic(comicId: number): Promise<Comic | undefined> {
    }
 }
 
-export async function getSearchComics(title: string): Promise<Comic[] | undefined> {
+// export async function getSearchComics(title: string): Promise<Comic[] | undefined> {
+
+// it should be Response | undefined, but then it's not working in comics.ts
+// export async function getSearchComics(title: string): Promise<Response | undefined> {
+export async function getSearchComics(title: string): Promise<any> {
    const baseUrl = `https://gateway.marvel.com/v1/public/comics?titleStartsWith=${title}&`
    try {
       const response = await axios.get(`${baseUrl}${auth}`)
-      return response.data?.data?.results
+      return (response.data?.data as Response)
+   }
+   catch (error) {
+      console.log(error)
+   }
+}
+
+export async function getSearchMoreComics(title: string, pageNumber: number): Promise<any> {
+   const offset = pageNumber ? pageNumber * 20 : 0
+   const baseUrl = `https://gateway.marvel.com/v1/public/comics?titleStartsWith=${title}&offset=${offset}&`
+   try {
+      const response = await axios.get(`${baseUrl}${auth}`)
+      // return response.data?.data?.results
+      return (response.data?.data as Response)
    }
    catch (error) {
       console.log(error)

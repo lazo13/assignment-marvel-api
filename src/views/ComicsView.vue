@@ -21,12 +21,12 @@ import comics from '@/store/module/comics'
 })
 export default class ComicsView extends Vue {
   isSearchFormTriggered: boolean = false
-  
+
   // initially don't show 'No data found.'
   handleSearch(value:boolean) {
     this.isSearchFormTriggered = value
   }
-  
+
   get loading() {
     return comics.loading
   }
