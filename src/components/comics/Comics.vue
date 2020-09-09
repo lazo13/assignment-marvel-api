@@ -23,13 +23,15 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class Comics extends Vue {
+  pageNumber: number = 0;
+
   created() {
     // comics.getComics()
   }
 
-  get pageNumber() {
-    return comics.pageNumber
-  }
+  // get pageNumber() {
+  //   return comics.pageNumber
+  // }
 
   get searchTerm() {
     return comics.searchTerm
@@ -48,7 +50,7 @@ export default class Comics extends Vue {
   }
 
   onLoadMore() {
-    comics.fetchMoreComics(this.searchTerm, this.pageNumber+1)
+    comics.fetchMoreComics(this.searchTerm, this.pageNumber++)
   }
 }
 </script>

@@ -1,9 +1,9 @@
 <template>
   <div>
     <search-form :rootView="'characters'" @searched="handleSearch"></search-form>
+    <Characters />
     <h1 v-if="loading">LOADING...</h1>
     <h1 v-else-if="!loading && characters.length < 1 && isSearchFormTriggered">No data found.</h1>
-    <Characters v-else />
   </div>
 </template>
 
@@ -21,13 +21,13 @@ import heroes from '@/store/module/heroes'
 })
 export default class HeroesView extends Vue {
   isSearchFormTriggered: boolean = false
-  
+
   // initially don't show 'No data found.'
   handleSearch(value:boolean) {
     console.log("HeroesView -> handleSearch -> value", value)
     this.isSearchFormTriggered = value
   }
-  
+
   get loading() {
     return heroes.loading
   }

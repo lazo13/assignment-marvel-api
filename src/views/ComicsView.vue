@@ -1,9 +1,9 @@
 <template>
   <div>
     <search-form :rootView="'comics'" @searched="handleSearch"></search-form>
+    <Comics />
     <h1 v-if="loading">LOADING...</h1>
     <h1 v-else-if="!loading && comics.length < 1 && isSearchFormTriggered">No data found.</h1>
-    <Comics v-else />
   </div>
 </template>
 

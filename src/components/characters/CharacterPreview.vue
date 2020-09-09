@@ -1,20 +1,22 @@
 <template>
   <div>
     <div class="flex-container">
+      <div class="flex2">
+        <img :src="url" class="char-img" />
+      </div>
+
       <div class="flex">
         <h1>{{ character.name }}</h1>
 
         <h3>Description:</h3>
-        <p>{{ character.description ? character.description : "No description added" }}</p>
+        <p>
+          {{ character.description ? character.description : 'No description added' }}
+        </p>
 
         <h3>Appearing in comics:</h3>
-        <ul v-for="comicName in comicsWhereCharacterAppears">
+        <ul class="no-bullets" v-for="comicName in comicsWhereCharacterAppears">
           <li>{{ comicName }}</li>
         </ul>
-      </div>
-
-      <div class="flex2">
-        <img :src="url" class="char-img" />
       </div>
     </div>
     <router-link to="/">
@@ -30,74 +32,80 @@ import { ComicList } from '@/store/models'
 
 @Component
 export default class CharacterPreview extends Vue {
-	comicsWhereCharacterAppears: string[] = []
-	url: string = ''
+  comicsWhereCharacterAppears: string[] = []
+  url: string = ''
 
-	mounted() {
-		heroes.loadCharacter(+this.$route.params.id).then((loadedCharacter) => {
-			if (!loadedCharacter) return
+  mounted() {
+    heroes.loadCharacter(+this.$route.params.id).then(loadedCharacter => {
+      if (!loadedCharacter) return
 
-			const thumbnail = loadedCharacter.thumbnail
-			if (!thumbnail) return
-			const { path, extension } = thumbnail
+      const thumbnail = loadedCharacter.thumbnail
+      if (!thumbnail) return
+      const { path, extension } = thumbnail
 
-			this.url = this.createImageUrl(path, extension)
-			this.getComicsWhereCharacterAppears(loadedCharacter.comics)
-		})
-	}
+      this.url = this.createImageUrl(path, extension)
+      this.getComicsWhereCharacterAppears(loadedCharacter.comics)
+    })
+  }
 
-	get character() {
-		return heroes.character
-	}
+  get character() {
+    return heroes.character
+  }
 
-	createImageUrl(path: string | undefined, extension: string | undefined): string {
-		if (!path) return ''
+  createImageUrl(path: string | undefined, extension: string | undefined): string {
+    if (!path) return ''
 
-		return `${path}/standard_xlarge.${extension}`
-	}
+    return `${path}/standard_xlarge.${extension}`
+  }
 
-	getComicsWhereCharacterAppears(comics: ComicList | undefined) {
-		if (!comics || !comics.items) return
+  getComicsWhereCharacterAppears(comics: ComicList | undefined) {
+    if (!comics || !comics.items) return
 
-		this.comicsWhereCharacterAppears = []
+    this.comicsWhereCharacterAppears = []
 
-		comics.items.forEach((item) => {
-			if (!item) return
+    comics.items.forEach(item => {
+      if (!item) return
 
-			this.comicsWhereCharacterAppears.push(item.name!)
-		})
-	}
+      this.comicsWhereCharacterAppears.push(item.name!)
+    })
+  }
 }
 </script>
 <style>
 .flex-container {
-	margin: 100px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  margin: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex {
-	flex: 50%;
-	text-align: revert;
+  flex: 50%;
+  text-align: left;
 }
 
 .flex2 {
-	flex: 50%;
+  flex: 50%;
 }
 
 .char-img {
-	width: 50%;
-	border-radius: 10px;
+  width: 50%;
+  border-radius: 10px;
+}
+
+ul.no-bullets {
+  list-style-type: none;
+  /* padding-left: 16px; */
+	margin: 5px 0;
 }
 
 .btn-back {
-	width: 200px;
-	padding: 15px;
-	border-radius: 25px;
-	background-color: transparent;
-	font-size: 20px;
-	margin-bottom: 100px;
-	cursor: pointer;
+  width: 200px;
+  padding: 15px;
+  border-radius: 25px;
+  background-color: transparent;
+  font-size: 20px;
+  margin-bottom: 100px;
+  cursor: pointer;
 }
 </style>
