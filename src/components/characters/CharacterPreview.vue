@@ -2,12 +2,12 @@
   <div>
     <div class="flex-container">
       <div class="flex">
-        <h3>{{ character.name }}</h3>
+        <h1>{{ character.name }}</h1>
 
-        <h5>Description:</h5>
-        <p>{{ character.description }}</p>
+        <h3>Description:</h3>
+        <p>{{ character.description ? character.description : "No description added" }}</p>
 
-        <h5>Appearing in comics:</h5>
+        <h3>Appearing in comics:</h3>
         <ul v-for="comicName in comicsWhereCharacterAppears">
           <li>{{ comicName }}</li>
         </ul>
@@ -79,7 +79,7 @@ export default class CharacterPreview extends Vue {
 
 .flex {
 	flex: 50%;
-	text-align: right;
+	text-align: revert;
 }
 
 .flex2 {

@@ -9,7 +9,7 @@
           required
         />
 
-        <button class="ui icon pink button">
+        <button class="ui icon blue button">
           <i class="search icon"></i>
         </button>
       </div>
@@ -20,7 +20,7 @@
 <script lang="ts">
 import comics from '@/store/module/comics'
 import heroes from '@/store/module/heroes'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 type rootView = 'characters' | 'comics'
 
 @Component
@@ -28,16 +28,24 @@ export default class SearchForm extends Vue {
   @Prop() readonly rootView!: rootView
   name: string = ''
 
-  async handleSearch() {
+  @Emit('searched')
+  searched(value: boolean) {}
+
+  handleSearch() {
+    this.searched(true)
     if (this.rootView === 'characters') {
-      await heroes.searchCharacters(this.name)
+      heroes.searchCharacters(this.name)
     }
     else {
-      await comics.searchComics(this.name)
+      comics.searchComics(this.name)
     }
-    this.name = ''
+    // this.name = ''
   }
 }
 </script>
 
-<style></style>
+<style>
+.ui.input {
+  font-size: 1.5em;
+}
+</style>

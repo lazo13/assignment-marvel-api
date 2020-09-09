@@ -45,7 +45,7 @@ export async function fetchCharacter(characterId: number): Promise<Character | u
 }
 
 export async function getSearchCharacters(name: string): Promise<Character[] | undefined> {
-   const baseUrl = `https://gateway.marvel.com/v1/public/characters?limit=100&nameStartsWith=${name}&`
+   const baseUrl = `https://gateway.marvel.com/v1/public/characters?nameStartsWith=${name}&`
    try {
       const response = await axios.get(`${baseUrl}${auth}`)
       return response.data?.data?.results
@@ -83,7 +83,7 @@ export async function fetchComic(comicId: number): Promise<Comic | undefined> {
 }
 
 export async function getSearchComics(title: string): Promise<Comic[] | undefined> {
-   const baseUrl = `https://gateway.marvel.com/v1/public/comics?limit=100&titleStartsWith=${title}&`
+   const baseUrl = `https://gateway.marvel.com/v1/public/comics?titleStartsWith=${title}&`
    try {
       const response = await axios.get(`${baseUrl}${auth}`)
       return response.data?.data?.results
