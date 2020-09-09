@@ -30,17 +30,18 @@ export default class SearchForm extends Vue {
   @Emit('searched')
   searched(value: boolean) {}
 
-  name: string = ''
+  name: string = this.rootView === 'characters' ? heroes.searchTerm : comics.searchTerm;
+  page: number = this.rootView === 'characters' ? heroes.pageNumber : comics.pageNumber;
 
-  public handleSearch() {
+  handleSearch() {
     this.searched(true)
+
     if (this.rootView === 'characters') {
       heroes.searchCharacters(this.name)
+    } else {
+      comics.clearComics()
+      comics.searchComics({ title: this.name, page: this.page })
     }
-    else {
-      comics.searchComics(this.name)
-    }
-    // this.name = ''
   }
 }
 </script>

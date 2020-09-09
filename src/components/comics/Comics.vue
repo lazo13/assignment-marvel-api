@@ -3,16 +3,16 @@
     <div class="cards">
       <div
         class="card"
-        v-for="comic in comics"
-        :key="comic.id"
+        v-for="(comic, i) in comics"
+        :key="'comic.id' + i"
         @click="goToDetails(comic.id)"
       >
         <h3>{{ comic.title }}</h3>
-        <img :src="`${comic.thumbnail.path}/standard_xlarge.${comic.thumbnail.extension}`"/>
+        <img :src="`${comic.thumbnail.path}/standard_xlarge.${comic.thumbnail.extension}`" />
       </div>
     </div>
     <form v-if="hasMore" @submit.prevent="onLoadMore">
-      <button>Load More</button>
+      <button class="btn-back">Load More</button>
     </form>
   </div>
 </template>
@@ -23,18 +23,14 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class Comics extends Vue {
-  pageNumber: number = 0;
-
-  created() {
-    // comics.getComics()
-  }
-
-  // get pageNumber() {
-  //   return comics.pageNumber
-  // }
+  // pageNumber: number = 1
 
   get searchTerm() {
     return comics.searchTerm
+  }
+
+  get pageNumber() {
+    return comics.pageNumber
   }
 
   get comics() {
@@ -50,7 +46,7 @@ export default class Comics extends Vue {
   }
 
   onLoadMore() {
-    comics.fetchMoreComics(this.searchTerm, this.pageNumber++)
+    comics.searchComics({ title: this.searchTerm, page: this.pageNumber+1 })
   }
 }
 </script>

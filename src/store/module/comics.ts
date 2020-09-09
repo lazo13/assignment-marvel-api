@@ -29,8 +29,8 @@ class ComicsModule extends VuexModule {
   }
 
   @Mutation
-  setPageNumber() {
-    this.pageNumber += 1
+  setPageNumber(page: number) {
+    this.pageNumber = page
   }
 
   @Mutation
@@ -40,18 +40,17 @@ class ComicsModule extends VuexModule {
 
   @Mutation
   setComics(comics: Comic[]) {
-    this.comics = comics
-  }
-
-  @Mutation
-  setMoreComics(comics: Comic[]) {
-    // this.comics = [...this.comics, ...comics]
     this.comics = this.comics.concat(comics)
   }
 
   @Mutation
   setComic(comic: Comic) {
     this.comic = comic
+  }
+
+  @Mutation
+  setComicsClear(comics: Comic[]) {
+    this.comics = comics;
   }
 
   @Action({ commit: 'setComics', rawError: true })
@@ -67,29 +66,21 @@ class ComicsModule extends VuexModule {
     return result
   }
 
-  @Action({ commit: 'setComics', rawError: true })
-  async searchComics(title: string) {
-    this.context.commit('setLoading', true)
-    // const result: Comic[] | undefined = await api.getSearchComics(title)
-    const result = await api.getSearchComics(title)
-    this.context.commit('setPageNumber', 0)
-    this.context.commit('setSearchTerm', title)
-    this.context.commit('setHasMore', result.total - (result.offset >=20 ? result.offset : result.count) > 0 ? true : false)
-    this.context.commit('setLoading', false)
-
-    const { results } = result
-
-    return results as Comic[]
+  @Action({commit: 'setComicsClear', rawError: true})
+  clearComics() {
+    const newComics: Comic[] = []
+    return newComics
   }
 
-  @Action({ commit: 'setMoreComics', rawError: true })
-  async fetchMoreComics(title: string, pageNumber: number) {
+  @Action({ commit: 'setComics', rawError: true })
+  async searchComics({ title, page }: { title: string, page: number }) {
     this.context.commit('setLoading', true)
     this.context.commit('setSearchTerm', title)
-    this.context.commit('setPageNumber')
+    this.context.commit('setPageNumber', page)
 
     // const result: Comic[] | undefined = await api.getSearchComics(title)
-    const result = await api.getSearchMoreComics(title, this.pageNumber)
+    const result = await api.getSearchComics(title, page)
+
     this.context.commit('setHasMore', result.total - (result.offset >=20 ? result.offset : result.count) > 0 ? true : false)
     this.context.commit('setLoading', false)
 
